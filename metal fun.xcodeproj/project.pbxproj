@@ -10,9 +10,33 @@
 		EA079C432CF2297B00B3FAEE /* metal fun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "metal fun.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EA079C592CF22A2400B3FAEE /* Exceptions for "metal fun" folder in "metal fun" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Shaders.metal,
+			);
+			target = EA079C422CF2297B00B3FAEE /* metal fun */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		EA079C5A2CF22A2400B3FAEE /* Exceptions for "metal fun" folder in "Copy Bundle Resources" phase from "metal fun" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = EA079C412CF2297B00B3FAEE /* Resources */;
+			membershipExceptions = (
+				Shaders.metal,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EA079C452CF2297B00B3FAEE /* metal fun */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EA079C592CF22A2400B3FAEE /* Exceptions for "metal fun" folder in "metal fun" target */,
+				EA079C5A2CF22A2400B3FAEE /* Exceptions for "metal fun" folder in "Copy Bundle Resources" phase from "metal fun" target */,
+			);
 			path = "metal fun";
 			sourceTree = "<group>";
 		};

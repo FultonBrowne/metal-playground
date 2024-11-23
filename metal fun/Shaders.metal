@@ -1,20 +1,43 @@
 #include <metal_stdlib>
 using namespace metal;
 
-// Vertex shader: Defines the positions of the vertices
-vertex float4 vertexShader(const device float2 *vertexArray [[ buffer(0) ]],
-                           uint vertexID [[ vertex_id ]]) {
-    // Simple quad positions (two triangles covering the full screen)
+constant float pi = 3.14159265;
+
+struct VertexOut {
+    float4 position [[ position ]];
+};
+
+vertex VertexOut vertexShader(uint vertexID [[ vertex_id ]]) {
     float2 positions[6] = {
-        float2(-1.0, -1.0), float2( 1.0, -1.0), float2(-1.0,  1.0),
-        float2(-1.0,  1.0), float2( 1.0, -1.0), float2( 1.0,  1.0)
+        float2(-1.0, -1.0), float2(1.0, -1.0), float2(-1.0, 1.0),
+        float2(-1.0, 1.0), float2(1.0, -1.0), float2(1.0, 1.0)
     };
-    return float4(positions[vertexID], 0.0, 1.0); // Convert 2D positions to 4D (homogeneous coordinates)
+
+    VertexOut out;
+    out.position = float4(positions[vertexID], 0.0, 1.0);
+    return out;
 }
 
-// Fragment shader: Outputs the gradient color for each pixel
-fragment float4 gradientShader(float4 fragCoord [[ position ]]) {
-    // Normalize coordinates to [0, 1]
-    float2 uv = fragCoord.xy / float2(800.0, 600.0); // Replace with dynamic screen size if needed
-    return float4(uv.x, uv.y, 1.0 - uv.x, 1.0); // Generate gradient colors
+fragment float4 animatedGradientShader(VertexOut in [[ stage_in ]],
+                                       constant float &buttonState [[ buffer(0) ]],
+                                       constant float &time [[ buffer(1) ]]) {
+    float2 uv = (in.position.xy + 1.0) / 2.0;
+
+    // Create a more complex animation pattern
+    float wave1 = sin((uv.x * 10.0) + time * 2.0);
+    float wave2 = cos((uv.y * 10.0) + time * 2.0);
+    float wave = wave1 * wave2;
+
+    float r = 0.5 + 0.5 * wave;
+    float g = uv.y;
+    float b = 0.5 + 0.5 * cos(time * 2.0);
+
+    if (buttonState > 0.5) {
+        // Alternate effect
+        r = uv.x;
+        g = 0.5 + 0.5 * sin(time * 2.0);
+        b = 0.5 + 0.5 * wave;
+    }
+
+    return float4(r, g, b, 1.0);
 }
